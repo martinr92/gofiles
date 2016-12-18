@@ -1,6 +1,5 @@
 # GoFiles
 [![Build Status](https://travis-ci.org/martinr92/gofiles.svg?branch=master)](https://travis-ci.org/martinr92/gofiles)
-[![codecov](https://codecov.io/gh/martinr92/gofiles/branch/master/graph/badge.svg)](https://codecov.io/gh/martinr92/gofiles)
 
 This application creates a .go file, that contains binary data (like templates, images, ...).
 Within your application, you can access to this data. This step is used to compile this data into the output binary file.
