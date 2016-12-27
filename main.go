@@ -11,6 +11,7 @@ import (
 
 const outTemplate = `package main
 {{range .Files}}
+// {{.FunctionName}} returns binary file content.
 func {{.FunctionName}}() []byte {
     return []byte{ {{.Content}} }
 }
