@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"html/template"
@@ -58,13 +59,14 @@ func main() {
 		}
 
 		// convert binary data for output
-		fileContentString := ""
+		var buffer bytes.Buffer
 		for i, byt := range fileContent {
 			if i != 0 {
-				fileContentString += ","
+				buffer.WriteString(",")
 			}
-			fileContentString += fmt.Sprintf("%#x", byt)
+			buffer.WriteString(fmt.Sprintf("%#x", byt))
 		}
+		fileContentString := buffer.String()
 
 		// build output object
 		outFile := gofileFile{FunctionName: functionName, Content: fileContentString}
