@@ -30,6 +30,7 @@ type gofileFile struct {
 func main() {
 	// parse arguments
 	path := flag.String("path", "", "path to gofiles.txt (excluding file name)")
+	dummy := flag.Bool("dummy", false, "dummy file (no file content)")
 	verboseLog := flag.Bool("verbose", false, "verbose log")
 	flag.Parse()
 	if path == nil || *path == "" {
@@ -54,20 +55,24 @@ func main() {
 		functionName := "GoFile" + elm[1]
 		log(verboseLog, "start processing file "+filePath+" with name "+functionName)
 
-		// read file
-		fileContent, err := ioutil.ReadFile(*path + filePath)
-		if err != nil {
-			panic(err)
-		}
-		log(verboseLog, "- file successfully loaded")
-
 		// convert binary data for output
 		var buffer bytes.Buffer
-		for i, byt := range fileContent {
-			if i != 0 {
-				buffer.WriteString(",")
+		if dummy != nil && *dummy {
+			buffer.WriteString("0x00")
+		} else {
+			// read file
+			fileContent, err := ioutil.ReadFile(*path + filePath)
+			if err != nil {
+				panic(err)
 			}
-			buffer.WriteString(fmt.Sprintf("%#x", byt))
+			log(verboseLog, "- file successfully loaded")
+
+			for i, byt := range fileContent {
+				if i != 0 {
+					buffer.WriteString(",")
+				}
+				buffer.WriteString(fmt.Sprintf("%#x", byt))
+			}
 		}
 		fileContentString := buffer.String()
 		log(verboseLog, "- file content converted into byte stream")
