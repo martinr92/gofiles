@@ -50,6 +50,11 @@ func main() {
 	// load each file
 	outData := gofile{}
 	for _, line := range lines {
+		// skip empty lines
+		if line == "" {
+			continue
+		}
+
 		elm := strings.Split(line, ";")
 		filePath := elm[0]
 		functionName := "GoFile" + elm[1]
